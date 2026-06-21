@@ -1,0 +1,2 @@
+{"dns": "_validation-persist.example.com", "type": "TXT", "value": "letsencrypt.org; accounturi=https://acme-staging-v02.api.letsencrypt.org/acme/acct/123456789"}
+{"dns": "_validation-persist.test.example.org", "type": "TXT", "value": "letsencrypt.org; accounturi=https://acme-staging-v02.api.letsencrypt.org/acme/acct/123456789; policy=wildcard"}

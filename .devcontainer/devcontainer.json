@@ -1,0 +1,23 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Python 3",
+	"image": "mcr.microsoft.com/devcontainers/python:3-3.10-trixie",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dnut.rewrap-revived",
+				"FanaticPythoner.better-todo-tree",
+				"ms-python.black-formatter",
+				"ms-python.debugpy",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.vscode-python-envs",
+				"ms-vscode-remote.remote-containers",
+				"tamasfe.even-better-toml"
+			]
+		}
+	},
+	"postCreateCommand": "sudo apt-get update && sudo apt-get install --no-install-recommends direnv --yes && echo 'eval \"$(direnv hook bash)\"' >> ~/.bashrc && pip install .",
+	"postAttachCommand": "direnv allow"
+}
