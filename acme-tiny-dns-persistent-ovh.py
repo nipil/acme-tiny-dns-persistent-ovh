@@ -140,7 +140,7 @@ def main(argv) -> None:
         choices=["debug", "info", "warning", "error", "critical"],
         default="warning",
     )
-    parser.add_argument("--ttl", type=int, default=60)
+    parser.add_argument("--ttl", type=int, default=60, help="Record TTL in seconds")
     args = parser.parse_args(argv)
     logging.basicConfig(
         level=getattr(logging, args.log_level.upper()),
