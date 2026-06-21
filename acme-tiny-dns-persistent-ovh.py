@@ -45,7 +45,6 @@ def run(ttl: int) -> None:
 
     # cache of zones and record
     zones = {zone: dict() for zone in client.get("/domain/zone")}
-    refresh_zones = set()
     logging.debug(f"OVH known zones: {zones.keys()}")
 
     # process JSONline input
@@ -105,9 +104,14 @@ def run(ttl: int) -> None:
                 ttl=ttl,
             )
 
-            # mark record cache as invalid, and zone needs refresh
+            # mark record cache as invalid
             forget_ids.append(record_id)
-            refresh_zones.add(zone)
+
+            # zone needs refresh
+            logging.info(f"Refreshing zone: {zone}")
+            client.post(f"/domain/zone/{zone}/refresh")
+
+            # end processing for this record
             break
 
         else:
@@ -121,16 +125,12 @@ def run(ttl: int) -> None:
                 ttl=ttl,
             )
             # zone needs refresh
-            refresh_zones.add(zone)
+            logging.info(f"Refreshing zone: {zone}")
+            client.post(f"/domain/zone/{zone}/refresh")
 
         # clean cache of invalid records
         for forget_id in forget_ids:
             zones[zone].pop(forget_id, None)
-
-    # refresh modified zones
-    for refresh_zone in refresh_zones:
-        logging.info(f"Refreshing zone: {refresh_zone}")
-        client.post(f"/domain/zone/{refresh_zone}/refresh")
 
 
 def main(argv) -> None:
